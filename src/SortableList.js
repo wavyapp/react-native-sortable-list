@@ -192,7 +192,15 @@ export default class SortableList extends Component {
   }
 
   render() {
-    let {contentContainerStyle, innerContainerStyle, horizontal, style, showsVerticalScrollIndicator, showsHorizontalScrollIndicator} = this.props;
+    let {
+      contentContainerStyle,
+       innerContainerStyle,
+        horizontal,
+        style,
+        showsVerticalScrollIndicator,
+        showsHorizontalScrollIndicator,
+        automaticallyAdjustContentInsets,
+      } = this.props;
     const {animated, contentHeight, contentWidth, scrollEnabled} = this.state;
     const containerStyle = StyleSheet.flatten([style, {opacity: Number(animated)}])
     innerContainerStyle = [
@@ -211,6 +219,7 @@ export default class SortableList extends Component {
     return (
       <View style={containerStyle} ref={this._onRefContainer}>
         <ScrollView
+          automaticallyAdjustContentInsets={automaticallyAdjustContentInsets}
           refreshControl={refreshControl}
           ref={this._onRefScrollView}
           horizontal={horizontal}
