@@ -215,7 +215,6 @@ export default class SortableList extends Component {
         enabled: scrollEnabled, // fix for Android
       });
     }
-
     return (
       <View style={containerStyle} ref={this._onRefContainer}>
         <ScrollView
@@ -325,7 +324,8 @@ export default class SortableList extends Component {
   }
 
   _onUpdateLayouts() {
-    Promise.all([this._headerLayout, this._footerLayout, ...Object.values(this._rowsLayouts)])
+    const l = Object.values(this._rowsLayouts);
+    Promise.all([this._headerLayout, this._footerLayout, ...l])
       .then(([headerLayout, footerLayout, ...rowsLayouts]) => {
         // Can get correct container’s layout only after rows’s layouts.
         this._container.measure((x, y, width, height, pageX, pageY) => {
@@ -339,15 +339,22 @@ export default class SortableList extends Component {
             contentWidth += layout.width;
           });
 
-          this.setState({
+          const newState = {
             containerLayout: {x, y, width, height, pageX, pageY},
             rowsLayouts: rowsLayoutsByKey,
             headerLayout,
             footerLayout,
             contentHeight,
             contentWidth,
-          }, () => {
-            this.setState({animated: true});
+          };
+
+
+          this.setState(newState, () => {
+            this.setState({animated: true}, () => {
+              if (this.props.onLayout) {
+                this.props.onLayout();
+              }
+            });
           });
         });
       });
