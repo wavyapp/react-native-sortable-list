@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {ScrollView, View, StyleSheet, Platform, RefreshControl, ViewPropTypes} from 'react-native';
+import {ScrollView, View, StyleSheet, Platform, RefreshControl} from 'react-native';
 import {shallowEqual, swapArrayElements} from './utils';
 import Row from './Row';
 
@@ -14,31 +13,6 @@ function uniqueRowKey(key) {
 uniqueRowKey.id = 0
 
 export default class SortableList extends Component {
-  static propTypes = {
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-    order: PropTypes.arrayOf(PropTypes.any),
-    style: ViewPropTypes.style,
-    contentContainerStyle: ViewPropTypes.style,
-    innerContainerStyle: ViewPropTypes.style,
-    sortingEnabled: PropTypes.bool,
-    scrollEnabled: PropTypes.bool,
-    horizontal: PropTypes.bool,
-    showsVerticalScrollIndicator: PropTypes.bool,
-    showsHorizontalScrollIndicator: PropTypes.bool,
-    refreshControl: PropTypes.element,
-    autoscrollAreaSize: PropTypes.number,
-    rowActivationTime: PropTypes.number,
-    manuallyActivateRows: PropTypes.bool,
-
-    renderRow: PropTypes.func.isRequired,
-    renderHeader: PropTypes.func,
-    renderFooter: PropTypes.func,
-
-    onChangeOrder: PropTypes.func,
-    onActivateRow: PropTypes.func,
-    onReleaseRow: PropTypes.func,
-  };
-
   static defaultProps = {
     sortingEnabled: true,
     scrollEnabled: true,
@@ -74,7 +48,7 @@ export default class SortableList extends Component {
     scrollEnabled: this.props.scrollEnabled
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.state.order.forEach((key) => {
       this._rowsLayouts[key] = new Promise((resolve) => {
         this._resolveRowLayout[key] = resolve;

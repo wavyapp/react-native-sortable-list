@@ -1,34 +1,8 @@
 import React, {Component, cloneElement} from 'react';
-import PropTypes from 'prop-types';
-import {Animated, PanResponder, StyleSheet, ViewPropTypes, Platform} from 'react-native';
+import {Animated, PanResponder, StyleSheet, Platform} from 'react-native';
 import {shallowEqual} from './utils';
 
 export default class Row extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-    animated: PropTypes.bool,
-    disabled: PropTypes.bool,
-    horizontal: PropTypes.bool,
-    style: ViewPropTypes.style,
-    location: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number,
-    }),
-    manuallyActivateRows: PropTypes.bool,
-    activationTime: PropTypes.number,
-
-    // Will be called on long press.
-    onActivate: PropTypes.func,
-    onLayout: PropTypes.func,
-    onPress: PropTypes.func,
-
-    // Will be called, when user (directly) move the view.
-    onMove: PropTypes.func,
-
-    // Will be called, when user release the view.
-    onRelease: PropTypes.func,
-  };
-
   static defaultProps = {
     location: {x: 0, y: 0},
     activationTime: 200,
@@ -91,7 +65,7 @@ export default class Row extends Component {
         }
       } else if (
         !this._active ||
-        gestureState.numberActiveTouches > 1 
+        gestureState.numberActiveTouches > 1
         || e.nativeEvent.target !== this._target
       ) {
         if (!this._isTouchInsideElement(e)) {
