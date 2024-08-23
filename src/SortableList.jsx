@@ -302,7 +302,7 @@ export default class SortableList extends Component {
     Promise.all([this._headerLayout, this._footerLayout, ...l])
       .then(([headerLayout, footerLayout, ...rowsLayouts]) => {
         // Can get correct container’s layout only after rows’s layouts.
-        this._container.measure((x, y, width, height, pageX, pageY) => {
+        this._container?.measure((x, y, width, height, pageX, pageY) => {
           const rowsLayoutsByKey = {};
           let contentHeight = 0;
           let contentWidth = 0;
